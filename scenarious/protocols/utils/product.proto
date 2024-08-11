@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "dev.dkorez.msathesis.catalog.grpc";
+
+package catalog;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service ProductServiceGrpc {
+  rpc ListAllProducts(google.protobuf.Empty) returns (ProductListGrpcResponse) {}
+  rpc GetProductById (ProductGrpcRequest) returns (ProductGrpcResponse) {}
+  rpc ListProductsByCategory (ProductsByCategoryGrpcRequest) returns (ProductListGrpcResponse) {}
+  rpc ListProductsByBrand (ProductsByBrandGrpcRequest) returns (ProductListGrpcResponse) {}
+  rpc ListProductsByTags (ProductsByTagsGrpcRequest) returns (ProductListGrpcResponse) {}
+  rpc FindProducts (SearchProductGrpcRequest) returns (ProductListGrpcResponse) {}
+}
+
+message SearchProductGrpcRequest {
+  string q = 1;
+}
+
+message ProductListGrpcResponse {
+  repeated ProductGrpcResponse products = 1;
+}
+
+message ProductGrpcRequest {
+  int64 id = 1;
+}
+
+message ProductGrpcResponse {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  google.protobuf.DoubleValue price = 4;
+  int32 quantity = 5;
+  bool active = 6;
+  string categoryName = 7;
+  string brandName = 8;
+  repeated SpecsGrpc specs = 9;
+  repeated string tags = 10;
+}
+
+message SpecsGrpc {
+  string name = 1;
+  string value = 2;
+}
+
+message ProductsByCategoryGrpcRequest {
+  int64 category_id = 1;
+}
+
+message ProductsByBrandGrpcRequest {
+  string brand = 1;
+}
+
+message ProductsByTagsGrpcRequest {
+  string tag = 1;
+}
