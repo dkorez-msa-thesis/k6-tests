@@ -6,11 +6,10 @@ const grpcClient = new grpc.Client();
 grpcClient.load([], './utils/product.proto');
 
 export function executeRest(baseUrl, endpoint) {
-    const res = http.get(`${baseUrl}${endpoint}`);
-    check(res, { [`REST ${baseUrl}${endpoint}: status 200`]: (r) => r.status === 200 });
-    console.log(`res.timings: ${res.timings}`);
+    const response = http.get(`${baseUrl}${endpoint}`);
+    check(response, { [`REST ${baseUrl}${endpoint}: status 200`]: (r) => r.status === 200 });
 
-    return res.timings.duration;
+    return response.timings.duration;
 }
 
 export function executeSingleMethodGrpc(serviceUrl, grpcMethod) {

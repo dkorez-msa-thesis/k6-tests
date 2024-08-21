@@ -9,7 +9,7 @@ export let options = {
         rest_test: {
             executor: 'constant-vus',
             vus: 10,
-            duration: '5s',
+            duration: '1m',
             exec: 'simulateGrpc',
         },
     },
